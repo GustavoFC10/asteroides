@@ -1,0 +1,212 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{enumitem}
+
+\hypersetup{hidelinks}
+
+\title{Classificacao de Asteroides Potencialmente Perigosos com Analise Explorat\'oria e Machine Learning}
+\author{
+\IEEEauthorblockN{Alander Menezes Arantes de Avila, Giancarlo Nunes Perli, Gustavo Faria Cardoso \\
+Paulo Henrique Perin, Pedro Lucas Ghezzi Bittencourt}
+\IEEEauthorblockA{Escola Politecnica, Pontificia Universidade Catolica do Parana (PUCPR) \\
+Curitiba, Brasil \\
+Autor para correspondencia: menezes.alander@pucpr.edu.br}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este manuscrito apresenta uma analise de asteroides com foco na classificacao de objetos potencialmente perigosos (PHA). O estudo combina analise exploratoria de dados, avaliacao de variaveis orbitais e fisicas, e modelos de machine learning para predicao binaria de risco. Os resultados indicam que variaveis de geometria orbital sao os principais discriminadores da classe PHA, com desempenho competitivo em cenarios com e sem variaveis definicionais de risco.
+\end{abstract}
+
+\begin{IEEEkeywords}
+asteroids, potentially hazardous asteroids, binary classification, imbalanced learning, machine learning
+\end{IEEEkeywords}
+
+\section{Introducao}
+\subsection{Contexto e motivacao}
+% TODO: Descrever problema de risco de impacto, contexto astronomico e relevancia da triagem automatizada.
+
+\subsection{Pergunta de pesquisa}
+% TODO: Formular pergunta central, por exemplo: quais caracteristicas distinguem PHAs de nao-PHAs?
+
+\subsection{Objetivos}
+\begin{itemize}[leftmargin=*]
+    \item Objetivo geral: classificar asteroides em PHA e nao-PHA.
+    \item Objetivos especificos:
+    \begin{itemize}[leftmargin=*]
+        \item caracterizar o dataset e suas limitacoes;
+        \item identificar variaveis mais informativas;
+        \item comparar modelos de classificacao em dados desbalanceados;
+        \item discutir trade-offs entre recall e precisao.
+    \end{itemize}
+\end{itemize}
+
+\section{Dados e Metodologia}
+\subsection{Fonte de dados}
+% TODO: Inserir fonte Kaggle/NASA, versao, data de acesso e licenca.
+
+\subsection{Descricao do dataset}
+\begin{table}[!t]
+\centering
+\caption{Resumo do dataset utilizado}
+\begin{tabular}{ll}
+\toprule
+Item & Valor \\
+\midrule
+Total de registros brutos & 958.524 \\
+Total de colunas brutas & 45 \\
+Registros apos limpeza principal & 938.603 \\
+Colunas apos limpeza principal & 38 \\
+Classe positiva (PHA=Y) & 2.066 (\~{}0,22\%) \\
+Classe negativa (PHA=N) & 936.537 (\~{}99,78\%) \\
+\bottomrule
+\end{tabular}
+\label{tab:dataset_resumo}
+\end{table}
+
+\subsection{Limpeza e pre-processamento}
+% TODO: Detalhar remocao de colunas identificadoras, tratamento de missing, encoding de variaveis categoricas e split treino/teste.
+
+\subsection{Estrategia para desbalanceamento}
+% TODO: Explicar class_weight, metricas adequadas e, se aplicavel, SMOTE.
+
+\subsection{Definicao dos experimentos}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Trilha A (com moid\_ld):} experimento com variavel definicional.
+    \item \textbf{Trilha B (sem moid\_ld):} experimento sem variavel definicional.
+\end{itemize}
+
+\section{Analise Explorat\'oria dos Dados}
+\subsection{Analise univariada}
+% TODO: Sintetizar os 20 atributos analisados e destacar os mais relevantes.
+
+\subsection{Analise multivariada}
+% TODO: Descrever hipoteses e achados principais (e.g., H x MOID, a x e, correlacoes de Spearman).
+
+\subsection{Principais achados da EDA}
+\begin{itemize}[leftmargin=*]
+    \item Geometria orbital discrimina melhor PHAs.
+    \item Forte multicolinearidade entre variaveis orbitais derivadas.
+    \item Diametro e albedo apresentam alta ausencia e menor poder discriminativo.
+\end{itemize}
+
+\begin{figure}[!t]
+    \centering
+    % \includegraphics[width=\columnwidth]{figuras/final_plot_1.png}
+    \fbox{\parbox[c][4.4cm][c]{0.95\columnwidth}{\centering Placeholder: Figura 1 (Regiao de risco PHA)}}
+    \caption{Regiao conjunta dos criterios de risco para classificacao PHA.}
+    \label{fig:final_plot_1}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    % \includegraphics[width=\columnwidth]{figuras/final_plot_2.png}
+    \fbox{\parbox[c][4.4cm][c]{0.95\columnwidth}{\centering Placeholder: Figura 2 (Orbitas por classe)}}
+    \caption{Comparacao qualitativa de orbitas para PHA e nao-PHA.}
+    \label{fig:final_plot_2}
+\end{figure}
+
+\section{Modelagem de Machine Learning}
+\subsection{Modelos avaliados}
+\begin{itemize}[leftmargin=*]
+    \item Regressao Logistica
+    \item Random Forest
+    \item XGBoost
+\end{itemize}
+
+\subsection{Protocolo de avaliacao}
+% TODO: Explicar hold-out estratificado, validacao cruzada (se usada) e metricas principais.
+
+\subsection{Resultados quantitativos}
+\begin{table*}[!t]
+\centering
+\caption{Comparacao de desempenho por trilha e modelo}
+\footnotesize
+\begin{tabular}{llllll}
+\toprule
+Trilha & Modelo & Precision (PHA) & Recall (PHA) & F1 (PHA) & PR-AUC \\
+\midrule
+A & Regressao Logistica & 0,24 & 1,00 & 0,39 & 0,6678 \\
+A & Random Forest & 0,98 & 0,99 & 0,98 & 0,9974 \\
+A & XGBoost & 0,92 & 0,92 & 0,92 & 0,9748 \\
+B & Regressao Logistica & 0,16 & 1,00 & 0,27 & 0,3090 \\
+B & Random Forest & 0,75 & 0,39 & 0,52 & 0,6737 \\
+B & XGBoost & 0,57 & 0,82 & 0,67 & 0,7642 \\
+\bottomrule
+\end{tabular}
+\label{tab:ml_resultados}
+\end{table*}
+
+\subsection{Interpretacao dos resultados}
+% TODO: Discutir leakage semantico na Trilha A, valor cientifico da Trilha B e trade-off recall x precisao.
+
+\section{Discussao}
+\subsection{Implicacoes praticas}
+% TODO: Relacionar achados com priorizacao de observacao e monitoramento de risco.
+
+\subsection{Limitacoes}
+\begin{itemize}[leftmargin=*]
+    \item Alto percentual de missing em variaveis fisicas (diameter/albedo).
+    \item Dependencia potencial de variaveis definicionais em cenarios com moid\_ld.
+    \item Possiveis mudancas de distribuicao temporal do catalogo.
+\end{itemize}
+
+\subsection{Ameacas a validade}
+% TODO: Inserir validade interna, externa e de construcao.
+
+\section{Conclusao}
+% TODO: Consolidar 3--5 mensagens finais e responder explicitamente a pergunta de pesquisa.
+
+\section*{Agradecimentos}
+% TODO: Agradecimentos ao professor, instituicao e eventuais apoios.
+
+\begin{thebibliography}{99}
+
+\bibitem{nasa_jpl}
+NASA/JPL, "Small-Body Database and NEO Resources," [Online]. Available: \url{https://ssd.jpl.nasa.gov/}. Accessed: Jun. 4, 2026.
+
+\bibitem{kaggle_asteroids}
+Sakhawat, "Asteroid Dataset," Kaggle, [Online]. Available: \url{https://www.kaggle.com/datasets/sakhawat18/asteroid-dataset/data}. Accessed: Jun. 4, 2026.
+
+\bibitem{imbalanced_learning}
+H. He and E. A. Garcia, "Learning from imbalanced data," \textit{IEEE Trans. Knowl. Data Eng.}, vol. 21, no. 9, pp. 1263--1284, Sep. 2009.
+
+\end{thebibliography}
+
+\appendix
+\section{Checklist de reproducibilidade}
+Checklist completo salvo no arquivo auxiliar \textit{CHECKLIST-MANUSCRITO-IEEE.md}.
+
+Itens minimos para reproducibilidade:
+\begin{itemize}[leftmargin=*]
+    \item Versoes de bibliotecas e ambiente.
+    \item Seeds aleatorias utilizadas.
+    \item Ordem de execucao dos experimentos.
+    \item Vinculo direto entre resultados no texto e outputs dos notebooks finais.
+\end{itemize}
+
+\section{Material suplementar}
+Guia de revisao e submissao salvo em \textit{GUIA-EXECUCAO-MANUSCRITO.md}.
+
+Conteudos recomendados para o material suplementar:
+\begin{itemize}[leftmargin=*]
+    \item Tabelas adicionais por modelo e por trilha experimental.
+    \item Matrizes de confusao completas no conjunto de teste.
+    \item Curvas PR/ROC e analise de limiar de decisao.
+    \item Configuracoes de hiperparametros e tempo de execucao.
+\end{itemize}
+
+\end{document}
